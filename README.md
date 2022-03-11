@@ -42,7 +42,7 @@ Because you can't change the name of the repository on Docker Hub I created a ne
 From now on this image can be pulled from Docker Hub under the name [Acn8/dpn](https://hub.docker.com/r/Acn8/dpn).
 
 ## Configuration
-In [config/](config/) you'll find the default configuration files for Nginx, PHP and PHP-FPM.
+In [config/](https://github.com/Acn8/dpn/tree/master/config) you'll find the default configuration files for Nginx, PHP and PHP-FPM.
 If you want to extend or customize that you can do so by mounting a configuration file in the correct folder;
 
 Nginx configuration:
@@ -96,4 +96,3 @@ RUN composer install \
 FROM Acn8/dpn
 COPY --chown=nginx --from=composer /app /var/www/html
 ```
-
