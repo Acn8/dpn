@@ -17,5 +17,5 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
-          repository: Acn8/dpn
+          repository: aaron8/dpn
           short-description: ${{ github.event.repository.description }}
