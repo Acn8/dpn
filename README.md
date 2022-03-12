@@ -27,13 +27,13 @@ the best practices and is easy to understand and modify to your needs.
 
 Start the Docker container:
 
-    docker run -p 80:8080 aaron8/dpn
+    docker run -d -p 80:8080 aaron8/dpn
 
 See the PHP info on http://localhost, or the static html page on http://localhost/test.html
 
 Or mount your own code to be served by PHP-FPM & Nginx
 
-    docker run -p 80:8080 -v ~/my-codebase:/var/www/html aaron8/dpn
+    docker run -d -p 80:8080 -v ~/my-codebase:/var/www/html aaron8/dpn
 
 ### Docker Hub repository name change
 Since we switched to PHP8 the repository name [aaron8/dpn7](https://hub.docker.com/r/aaron8/dpn) didn't make sense anymore.
@@ -47,15 +47,15 @@ If you want to extend or customize that you can do so by mounting a configuratio
 
 Nginx configuration:
 
-    docker run -v "`pwd`/nginx-server.conf:/etc/nginx/conf.d/server.conf" aaron8/dpn
+    docker run -d -v "`pwd`/nginx-server.conf:/etc/nginx/conf.d/server.conf" aaron8/dpn
 
 PHP configuration:
 
-    docker run -v "`pwd`/php-setting.ini:/etc/php8/conf.d/settings.ini" aaron8/dpn
+    docker run -d -v "`pwd`/php-setting.ini:/etc/php8/conf.d/settings.ini" aaron8/dpn
 
 PHP-FPM configuration:
 
-    docker run -v "`pwd`/php-fpm-settings.conf:/etc/php8/php-fpm.d/server.conf" aaron8/dpn
+    docker run -d -v "`pwd`/php-fpm-settings.conf:/etc/php8/php-fpm.d/server.conf" aaron8/dpn
 
 _Note; Because `-v` requires an absolute path I've added `pwd` in the example to return the absolute path to the current directory_
 
