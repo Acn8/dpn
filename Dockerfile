@@ -5,6 +5,12 @@ LABEL Description="Lightweight container with Nginx 1.20 & PHP 8.0 based on Alpi
 # Setup document root
 WORKDIR /var/www/html
 
+RUN apk --update add tzdata && \
+    cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
+    echo "Asia/Shanghai" > /etc/timezone && \
+    apk del tzdata && \
+    rm -rf /var/cache/apk/*
+
 # Install packages and remove default server definition
 RUN apk add --no-cache \
   curl \
