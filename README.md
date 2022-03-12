@@ -27,19 +27,19 @@ the best practices and is easy to understand and modify to your needs.
 
 Start the Docker container:
 
-    docker run -p 80:8080 Acn8/dpn
+    docker run -p 80:8080 aaron8/dpn
 
 See the PHP info on http://localhost, or the static html page on http://localhost/test.html
 
 Or mount your own code to be served by PHP-FPM & Nginx
 
-    docker run -p 80:8080 -v ~/my-codebase:/var/www/html Acn8/dpn
+    docker run -p 80:8080 -v ~/my-codebase:/var/www/html aaron8/dpn
 
 ### Docker Hub repository name change
-Since we switched to PHP8 the repository name [Acn8/dpn7](https://hub.docker.com/r/Acn8/dpn) didn't make sense anymore.
+Since we switched to PHP8 the repository name [aaron8/dpn7](https://hub.docker.com/r/aaron8/dpn) didn't make sense anymore.
 Because you can't change the name of the repository on Docker Hub I created a new one.
 
-From now on this image can be pulled from Docker Hub under the name [Acn8/dpn](https://hub.docker.com/r/Acn8/dpn).
+From now on this image can be pulled from Docker Hub under the name [aaron8/dpn](https://hub.docker.com/r/aaron8/dpn).
 
 ## Configuration
 In [config/](https://github.com/Acn8/dpn/tree/master/config) you'll find the default configuration files for Nginx, PHP and PHP-FPM.
@@ -47,15 +47,15 @@ If you want to extend or customize that you can do so by mounting a configuratio
 
 Nginx configuration:
 
-    docker run -v "`pwd`/nginx-server.conf:/etc/nginx/conf.d/server.conf" Acn8/dpn
+    docker run -v "`pwd`/nginx-server.conf:/etc/nginx/conf.d/server.conf" aaron8/dpn
 
 PHP configuration:
 
-    docker run -v "`pwd`/php-setting.ini:/etc/php8/conf.d/settings.ini" Acn8/dpn
+    docker run -v "`pwd`/php-setting.ini:/etc/php8/conf.d/settings.ini" aaron8/dpn
 
 PHP-FPM configuration:
 
-    docker run -v "`pwd`/php-fpm-settings.conf:/etc/php8/php-fpm.d/server.conf" Acn8/dpn
+    docker run -v "`pwd`/php-fpm-settings.conf:/etc/php8/php-fpm.d/server.conf" aaron8/dpn
 
 _Note; Because `-v` requires an absolute path I've added `pwd` in the example to return the absolute path to the current directory_
 
@@ -65,7 +65,7 @@ _Note; Because `-v` requires an absolute path I've added `pwd` in the example to
 If you need [Composer](https://getcomposer.org/) in your project, here's an easy way to add it.
 
 ```Dockerfile
-FROM Acn8/dpn:latest
+FROM aaron8/dpn:latest
 
 # Install composer from the official image
 COPY --from=composer /usr/bin/composer /usr/bin/composer
@@ -93,6 +93,6 @@ RUN composer install \
 
 # continue stage build with the desired image and copy the source including the
 # dependencies downloaded by composer
-FROM Acn8/dpn
+FROM aaron8/dpn
 COPY --chown=nginx --from=composer /app /var/www/html
 ```
