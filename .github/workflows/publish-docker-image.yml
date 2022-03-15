@@ -1,0 +1,50 @@
+name: Publish Docker Image
+
+on:
+  workflow_dispatch:
+
+jobs:
+  publish-image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          repository: Revadike/epicgames-freebies-claimer
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set latest release version tag
+        run: |
+          version_tagname=$(curl -s https://api.github.com/repos/Revadike/epicgames-freebies-claimer/releases | jq -r '.[0].tag_name')
+          echo "LATEST_VERSION_TAG=${version_tagname/[vV]/}" >> $GITHUB_ENV
+
+      - name: Build and push main image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          platforms: linux/amd64,linux/arm64,linux/ppc64le,linux/s390x,linux/arm/v7,linux/arm/v6
+          push: true
+          file: Dockerfile
+          tags: |
+            ghcr.io/aaron8/epic-free:latest
+            ghcr.io/aaron8/epic-free:${{ env.LATEST_VERSION_TAG }}
+            aaron8/epic-free:latest
+            aaron8/epic-free:${{ env.LATEST_VERSION_TAG }}
