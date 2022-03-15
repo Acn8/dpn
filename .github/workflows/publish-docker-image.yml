@@ -1,7 +1,12 @@
 name: Publish Docker Image
 
 on:
-  workflow_dispatch:
+  push:
+    branches:
+      - master
+    paths:
+      - README.md
+      - .github/workflows/publish-docker-image.yml
 
 jobs:
   publish-image:
