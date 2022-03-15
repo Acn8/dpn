@@ -5,7 +5,6 @@ on:
     branches:
       - master
     paths:
-      - README.md
       - .github/workflows/publish-docker-image.yml
 
 jobs:
@@ -49,8 +48,7 @@ jobs:
           push: true
           file: Dockerfile
           tags: |
-            ghcr.io/jackblk/epicgames-freebies-claimer:latest
-            ghcr.io/jackblk/epicgames-freebies-claimer:${{ env.LATEST_VERSION_TAG }}
+            ghcr.io/acn8/epicgames-freebies-claimer:latest
+            ghcr.io/acn8/epicgames-freebies-claimer:${{ env.LATEST_VERSION_TAG }}
             aaron8/epic-free:latest
             aaron8/epic-free:${{ env.LATEST_VERSION_TAG }}
-
